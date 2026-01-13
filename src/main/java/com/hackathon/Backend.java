@@ -1,9 +1,12 @@
 package com.hackathon;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.*;
+import org.springframework.boot.autoconfigure.*;
+import org.springframework.data.jpa.repository.config.*;
 
 @SpringBootApplication
+@EnableJpaAuditing(modifyOnCreate = false)
+@EnableJpaRepositories(considerNestedRepositories = true)
 public class Backend {
 
     public static void main(String[] args) {
