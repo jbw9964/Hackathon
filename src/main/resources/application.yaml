@@ -1,14 +1,15 @@
-spring:
-  application:
-    name: hackathon
 
+spring:
+  application.name: hackathon
+  threads.virtual.enabled: true
 
   profiles:
+    default: local
     group:
       local:
         - local-db
+        - init-sample-user
 
-    default: local
 
   datasource:
     url: ${db.url}
@@ -24,6 +25,25 @@ spring:
         use_sql_comments: true
         globally_quoted_identifiers: true
 
+  ai:
+    anthropic:
+      api-key: ${common.claude.api-key}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+
+mdc-key:
+  request-id: request-id
+
 logging:
+  pattern:
+    dateformat: yyyy-MM-dd'T'HH:mm:ss.SSSz,Asia/Seoul
+    level: '[RID:%36X{${mdc-key.request-id}}]%5p'
+
   level:
     sql: debug
