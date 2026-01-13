@@ -7,6 +7,7 @@ build/
 
 ## Custom exlusion
 /local
+/src/main/resources/application-common-secret.yaml
 
 ### STS ###
 .apt_generated
@@ -113,12 +114,6 @@ cmake-build-*/
 
 # Mongo Explorer plugin
 .idea/**/mongoSettings.xml
-
-# File-based project format
-*.iws
-
-# IntelliJ
-out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
