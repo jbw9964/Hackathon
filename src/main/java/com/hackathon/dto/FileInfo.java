@@ -1,10 +1,10 @@
 package com.hackathon.dto;
 
-import com.hackathon.domain.*;
+import org.springframework.http.*;
 
 public record FileInfo(
         Long fileId,
-        FileMediaType fileMediaType,
+        MediaType fileMediaType,
         String savedFileName
 ) {
 

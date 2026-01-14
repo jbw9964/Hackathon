@@ -8,18 +8,18 @@ public record SaveFileDto(
         String additionalInfo,
         Category category,
         FileType fileType,
-        FileMediaType fileMediaType,
+        String fileMediaType,
         String originalFileName,
         String savedFileName
 ) {
 
     public SaveFileDto(
-            String originalFileName, String savedFileName,
+            String originalFileName, String savedFileName, String fileMediaType,
             SaveFileRequest request
     ) {
         this(
                 null, null,
-                request.category(), request.fileType(), request.fileMediaType(),
+                request.category(), request.fileType(), fileMediaType,
                 originalFileName, savedFileName
         );
     }

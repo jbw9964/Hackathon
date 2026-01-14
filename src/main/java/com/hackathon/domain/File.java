@@ -2,6 +2,7 @@ package com.hackathon.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.http.*;
 
 @Entity
 @Getter
@@ -22,8 +23,7 @@ public class File extends BaseTimeEntity implements EntityId<Long> {
     @Enumerated(EnumType.STRING)
     private FileType fileType;
 
-    @Enumerated(EnumType.STRING)
-    private FileMediaType fileMediaType;
+    private String fileMediaType;
 
     @Column(updatable = false)
     private String originalFileName;
@@ -34,7 +34,7 @@ public class File extends BaseTimeEntity implements EntityId<Long> {
     @Builder
     public File(
             String fileOverview, String additionalInfo, Category category, FileType fileType,
-            String originalFileName, String savedFileName, FileMediaType fileMediaType
+            String originalFileName, String savedFileName, String fileMediaType
     ) {
         this.fileOverview = fileOverview;
         this.additionalInfo = additionalInfo;
@@ -43,5 +43,9 @@ public class File extends BaseTimeEntity implements EntityId<Long> {
         this.originalFileName = originalFileName;
         this.savedFileName = savedFileName;
         this.fileMediaType = fileMediaType;
+    }
+
+    public MediaType getFileMediaType() {
+        return MediaType.parseMediaType(this.fileMediaType);
     }
 }

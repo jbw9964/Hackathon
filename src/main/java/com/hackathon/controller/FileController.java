@@ -53,12 +53,12 @@ public class FileController {
 
         FileInfo info = fileService.getFileInfo(fileId);
         String fileName = info.savedFileName();
-        FileMediaType fileMediaType = info.fileMediaType();
+        MediaType fileMediaType = info.fileMediaType();
 
         byte[] file = fileIO.getFileData(fileName);
 
         return ResponseEntity.ok()
-                .contentType(fileMediaType.getMediaType())
+                .contentType(fileMediaType)
                 .body(file);
     }
 
@@ -74,12 +74,16 @@ public class FileController {
     ) {
         String newFileName = uuidProvider.getRandomStringUUID();
         String originalFilename = multipartFile.getOriginalFilename();
+        String fileMediaType = multipartFile.getContentType();
 
         fileIO.transferMultipartFile(multipartFile, newFileName);
 
         log.info("content type : {}", multipartFile.getContentType());
 
-        Long resp = fileService.recordFilePath(new SaveFileDto(originalFilename, newFileName, request));
+        Long resp = fileService.recordFilePath(new SaveFileDto(
+                originalFilename, newFileName,
+                fileMediaType, request
+        ));
 
         return ApiResponse.created(resp);
     }

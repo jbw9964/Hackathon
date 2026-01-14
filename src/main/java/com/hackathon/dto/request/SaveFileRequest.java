@@ -4,8 +4,7 @@ import com.hackathon.domain.*;
 
 public record SaveFileRequest(
         Category category,
-        FileType fileType,
-        FileMediaType fileMediaType
+        FileType fileType
 ) {
 
 }
