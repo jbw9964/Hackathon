@@ -47,6 +47,16 @@ management:
           - health
           - info
 
+springdoc:
+  api-docs.groups.enabled: true
+
+  swagger-ui:
+    enabled: true
+    path: /api-doc
+    tags-sorter: alpha
+    operations-sorter: alpha
+    display-request-duration: true
+
 mdc-key:
   request-id: request-id
 
