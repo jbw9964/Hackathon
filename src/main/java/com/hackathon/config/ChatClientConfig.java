@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class ChatClientConfig {
 
     @Bean
-    public ChatClient openAiChatModel(OpenAiChatModel openAiChatModel) {
+    public ChatClient chatClient(OpenAiChatModel openAiChatModel) {
         return ChatClient.builder(openAiChatModel)
                 .defaultAdvisors(AdvisorParams.ENABLE_NATIVE_STRUCTURED_OUTPUT)
                 .build();
