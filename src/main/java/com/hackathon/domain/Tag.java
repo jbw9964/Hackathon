@@ -14,5 +14,8 @@ public class Tag extends BaseTimeEntity implements EntityId<Long> {
 
     private String description;
 
-
+    @Builder
+    public Tag(String description) {
+        this.description = description;
+    }
 }

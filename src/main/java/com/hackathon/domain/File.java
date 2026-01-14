@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.http.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -15,10 +19,8 @@ public class File extends BaseTimeEntity implements EntityId<Long> {
 
     private String fileOverview;
 
-    private String additionalInfo;
-
     @Enumerated(EnumType.STRING)
-    private Category category = Category.UNCLASSIFIED;
+    private List<Category> category = Collections.emptyList();
 
     @Enumerated(EnumType.STRING)
     private FileType fileType;
@@ -31,13 +33,20 @@ public class File extends BaseTimeEntity implements EntityId<Long> {
     @Column(nullable = false, unique = true)
     private String savedFileName;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "file_tag_join",
+            joinColumns = @JoinColumn(name = "file_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tags = new ArrayList<>();
+
     @Builder
     public File(
-            String fileOverview, String additionalInfo, Category category, FileType fileType,
+            String fileOverview, List<Category> category, FileType fileType,
             String originalFileName, String savedFileName, String fileMediaType
     ) {
         this.fileOverview = fileOverview;
-        this.additionalInfo = additionalInfo;
         this.category = category;
         this.fileType = fileType;
         this.originalFileName = originalFileName;
@@ -48,4 +57,11 @@ public class File extends BaseTimeEntity implements EntityId<Long> {
     public MediaType getFileMediaType() {
         return MediaType.parseMediaType(this.fileMediaType);
     }
+
+    public void enrichMetadata(String fileOverview, List<Category> category, List<Tag> tags) {
+        this.fileOverview = fileOverview;
+        this.category = category;
+        this.tags = tags;
+    }
+
 }

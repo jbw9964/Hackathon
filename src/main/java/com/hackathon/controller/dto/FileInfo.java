@@ -1,4 +1,4 @@
-package com.hackathon.dto;
+package com.hackathon.controller.dto;
 
 import org.springframework.http.*;
 

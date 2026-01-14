@@ -9,7 +9,6 @@ public enum FileType {
     IMAGE_VIDEO(""),
     DOCUMENT(""),
     LINK(""),
-    AUDIO(""),
     ETC("");
 
     private final String description;
