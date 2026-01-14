@@ -40,8 +40,7 @@ public class FileVectorRepository {
                 format.apply("originalFileName", file.getOriginalFileName()),
                 format.apply("fileOverView", file.getFileOverview()),
                 format.apply("fileType", file.getFileType()),
-                format.apply("category", file.getCategory()),
-                format.apply("additionalInfo", file.getAdditionalInfo())
+                format.apply("category", file.getCategory())
                 ).filter(Objects::nonNull)
                 .collect(Collectors.joining("\n"));
 

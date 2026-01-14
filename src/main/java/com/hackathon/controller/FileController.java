@@ -1,8 +1,7 @@
 package com.hackathon.controller;
 
+import com.hackathon.controller.dto.FileInfo;
 import com.hackathon.domain.*;
-import com.hackathon.dto.*;
-import com.hackathon.dto.request.*;
 import com.hackathon.service.*;
 import com.hackathon.util.*;
 import com.hackathon.util.api.*;
@@ -24,7 +23,6 @@ public class FileController {
 
     private final FileService fileService;
     private final FileIO fileIO;
-    private final UuidProvider uuidProvider;
 
     @GetMapping
     public ApiResponse<SimplePageResponse<File>> getFiles(
@@ -68,23 +66,10 @@ public class FileController {
             ))
     )
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ApiResponse<Long> saveFile(
-            @RequestPart MultipartFile multipartFile,
-            @RequestPart(name = "request") SaveFileRequest request
+    public ApiResponse<File> saveFile(
+            @RequestPart MultipartFile multipartFile
     ) {
-        String newFileName = uuidProvider.getRandomStringUUID();
-        String originalFilename = multipartFile.getOriginalFilename();
-        String fileMediaType = multipartFile.getContentType();
-
-        fileIO.transferMultipartFile(multipartFile, newFileName);
-
-        log.info("content type : {}", multipartFile.getContentType());
-
-        Long resp = fileService.recordFilePath(new SaveFileDto(
-                originalFilename, newFileName,
-                fileMediaType, request
-        ));
-
-        return ApiResponse.created(resp);
+        File file = fileService.saveFile(multipartFile);
+        return ApiResponse.created(file);
     }
 }

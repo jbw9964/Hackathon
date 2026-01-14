@@ -1,13 +1,12 @@
 package com.hackathon.service;
 
-import com.hackathon.domain.Category;
 import com.hackathon.domain.File;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.content.Media;
-import org.springframework.core.io.Resource;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeType;
 
@@ -15,21 +14,21 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class FileCategoryExtractor {
+public class FileTagExtractor {
     private final ChatClient chatClient;
     private final FileIO fileIO;
 
-    public List<Category> extractCategory(File file) {
+    public List<String> extractTags(File file) {
         return chatClient.prompt()
                 .system(s -> s.text("""
-                        You are an expert at classifying documents into categories.
-                        Given the content of a document, identify the most appropriate categories from the following list: {categories}.
+                        당신은 문서 태그 생성 전문가입니다.
+                        문서의 내용을 분석하여 적합한 태그를 생성해주세요.
+                        태그는 3개 이하로 생성하며, 각 태그는 문서의 핵심 주제나 내용을 나타내야 합니다.
+                        태그는 한글 또는 영문 단어로 간결하게 작성해주세요.
                         """)
-                        .param("categories", Category.values())
                 )
                 .user(u -> u.text("""
-                        Here is the content of the document
-                        Please provide the categories that best fit this document.
+                        다음 문서의 내용을 분석하여 적합한 태그 3개 이하를 생성해주세요.
                         """)
                         .media(new Media(getMimeType(file), getFileResource(file)))
                 )
