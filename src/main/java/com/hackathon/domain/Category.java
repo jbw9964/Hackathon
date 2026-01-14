@@ -11,8 +11,7 @@ public enum Category {
     AGENCY_DOCUMENT(""),
     PRIVATE_DOCUMENT(""),
     ETC(""),
-    UNCLASSIFIED("")
-    ;
+    UNCLASSIFIED("");
 
     private final String description;
 
@@ -20,5 +19,12 @@ public enum Category {
         return Arrays.stream(Category.values())
                 .filter(c -> !UNCLASSIFIED.equals(c))
                 .toArray(Category[]::new);
+    }
+
+    public static Category resolveOrNull(String name) {
+        return Arrays.stream(Category.values())
+                .filter(f -> f.name().equals(name))
+                .findAny()
+                .orElseGet(() -> null);
     }
 }

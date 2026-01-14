@@ -19,7 +19,11 @@ public class File extends BaseTimeEntity implements EntityId<Long> {
     @Enumerated(EnumType.STRING)
     private Category category = Category.UNCLASSIFIED;
 
-    private String fileType;
+    @Enumerated(EnumType.STRING)
+    private FileType fileType;
+
+    @Enumerated(EnumType.STRING)
+    private FileMediaType fileMediaType;
 
     @Column(updatable = false)
     private String originalFileName;
@@ -29,8 +33,8 @@ public class File extends BaseTimeEntity implements EntityId<Long> {
 
     @Builder
     public File(
-            String fileOverview, String additionalInfo, Category category, String fileType,
-            String originalFileName, String savedFileName
+            String fileOverview, String additionalInfo, Category category, FileType fileType,
+            String originalFileName, String savedFileName, FileMediaType fileMediaType
     ) {
         this.fileOverview = fileOverview;
         this.additionalInfo = additionalInfo;
@@ -38,5 +42,6 @@ public class File extends BaseTimeEntity implements EntityId<Long> {
         this.fileType = fileType;
         this.originalFileName = originalFileName;
         this.savedFileName = savedFileName;
+        this.fileMediaType = fileMediaType;
     }
 }
