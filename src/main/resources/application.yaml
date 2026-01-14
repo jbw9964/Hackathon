@@ -26,8 +26,17 @@ spring:
         globally_quoted_identifiers: true
 
   ai:
-    openai:
-      api-key: ${common-secret.openai.api-key}
+    google:
+      genai:
+        api-key: ${common-secret.google.genai.api-key}
+        chat:
+          options:
+            model: gemini-3-flash-preview
+        embedding:
+          api-key: ${common-secret.google.genai.api-key}
+          text:
+            options:
+              model: text-embedding-004
 
   servlet.multipart:
     enabled: true
