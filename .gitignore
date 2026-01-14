@@ -8,6 +8,8 @@ build/
 ## Custom exlusion
 /local
 /src/main/resources/application-common-secret.yaml
+/src/main/resources/application-prod-secret.yaml
+/src/main/resources/application-prod-db.yaml
 
 ### STS ###
 .apt_generated

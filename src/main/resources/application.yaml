@@ -9,7 +9,10 @@ spring:
       local:
         - local-db
         - common-secret
-        - init-sample-user
+
+      prod:
+        - prod-db
+        - prod-secret
 
   datasource:
     url: ${db.url}
