@@ -1,8 +1,8 @@
 package com.hackathon.config;
 
-import org.springframework.ai.anthropic.AnthropicChatModel;
 import org.springframework.ai.chat.client.AdvisorParams;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 public class ChatClientConfig {
 
     @Bean
-    public ChatClient anthropicChatClient(AnthropicChatModel anthropicChatModel) {
-        return ChatClient.builder(anthropicChatModel)
+    public ChatClient openAiChatModel(OpenAiChatModel openAiChatModel) {
+        return ChatClient.builder(openAiChatModel)
                 .defaultAdvisors(AdvisorParams.ENABLE_NATIVE_STRUCTURED_OUTPUT)
                 .build();
     }
