@@ -8,8 +8,8 @@ spring:
     group:
       local:
         - local-db
+        - common-secret
         - init-sample-user
-
 
   datasource:
     url: ${db.url}
@@ -27,7 +27,15 @@ spring:
 
   ai:
     anthropic:
-      api-key: ${common.claude.api-key}
+      api-key: ${common-secret.claude.api-key}
+
+  servlet.multipart:
+    enabled: true
+    location: ${common-secret.file.temp-directory}
+    file-size-threshold: 0B
+    max-file-size: ${common-secret.file.max-size}
+    max-request-size: ${common-secret.file.max-size}
+    strict-servlet-compliance: true
 
 management:
   endpoints:
