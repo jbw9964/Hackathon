@@ -7,3 +7,11 @@ db:
   database: db-local
   port: 3306
   url: jdbc:mysql://${db.host}:${db.port}/${db.database}
+
+spring:
+  ai:
+    vectorstore:
+      weaviate:
+        scheme: http
+        host: localhost:8081
+        object-class: DrawerFile
