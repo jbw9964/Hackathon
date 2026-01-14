@@ -26,8 +26,6 @@ spring:
         globally_quoted_identifiers: true
 
   ai:
-    anthropic:
-      api-key: ${common-secret.claude.api-key}
     openai:
       api-key: ${common-secret.openai.api-key}
 
