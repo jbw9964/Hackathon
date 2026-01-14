@@ -3,6 +3,7 @@ package com.hackathon.repository;
 import com.hackathon.domain.File;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.document.Document;
+import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +21,15 @@ public class FileVectorRepository {
     public void save(File file) {
         Document document = toDocument(file);
         vectorStore.add(List.of(document));
+    }
+
+    public List<Document> similaritySearch(String query, int topK, double similarityThreshold) {
+        SearchRequest searchRequest = SearchRequest.builder()
+                .query(query)
+                .topK(topK)
+                .similarityThreshold(similarityThreshold)
+                .build();
+        return vectorStore.similaritySearch(searchRequest);
     }
 
     private Document toDocument(File file) {
