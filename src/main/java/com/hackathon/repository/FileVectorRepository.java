@@ -40,13 +40,13 @@ public class FileVectorRepository {
                 format.apply("originalFileName", file.getOriginalFileName()),
                 format.apply("fileOverView", file.getFileOverview()),
                 format.apply("fileType", file.getFileType()),
-                format.apply("category", file.getCategory())
+                format.apply("category", file.getCategories())
                 ).filter(Objects::nonNull)
                 .collect(Collectors.joining("\n"));
 
         Map<String, Object> metadata = Stream.of(
                         Map.entry("fileType", file.getFileType()),
-                        Map.entry("category", file.getCategory())
+                        Map.entry("category", file.getCategories())
                 )
                 .filter(e -> e.getValue() != null)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

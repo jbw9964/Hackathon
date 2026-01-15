@@ -26,7 +26,7 @@ spring:
     password: ${db.password}
 
   jpa:
-    open-in-view: false
+    open-in-view: true
     properties:
       hibernate:
         format_sql: true

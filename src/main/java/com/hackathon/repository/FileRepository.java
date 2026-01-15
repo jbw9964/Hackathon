@@ -1,16 +1,32 @@
 package com.hackathon.repository;
 
 import com.hackathon.domain.*;
-import org.springframework.data.domain.*;
+import java.util.*;
 import org.springframework.data.jpa.repository.*;
 
 public interface FileRepository extends JpaRepository<File, Long> {
 
-    Page<File> findAllBy(Pageable pageable);
+    List<File> findAllBy();
 
-    Page<File> findByCategory(Category category, Pageable pageable);
+    @Query("""
+            select f from File f
+            left join fetch f.tags
+                where :category member of f.categories
+            """)
+    List<File> findByCategory(Category category);
 
-    Page<File> findByFileType(FileType fileType, Pageable pageable);
+    @Query("""
+            select f from File f
+            left join fetch f.tags
+                where f.fileType = :fileType
+            """)
+    List<File> findByFileType(FileType fileType);
 
-    Page<File> findByCategoryAndFileType(Category category, FileType fileType, Pageable pageable);
+    @Query("""
+            select f from File f
+            left join fetch f.tags
+                where :category member of f.categories
+                and f.fileType = :fileType
+            """)
+    List<File> findByCategoryAndFileType(Category category, FileType fileType);
 }

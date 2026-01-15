@@ -19,8 +19,14 @@ public class File extends BaseTimeEntity implements EntityId<Long> {
 
     private String fileOverview;
 
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(
+            name = "file_category",
+            joinColumns = @JoinColumn(name = "file_id")
+    )
     @Enumerated(EnumType.STRING)
-    private List<Category> category = Collections.emptyList();
+    @Column(name = "category")
+    private List<Category> categories = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private FileType fileType;
@@ -43,11 +49,11 @@ public class File extends BaseTimeEntity implements EntityId<Long> {
 
     @Builder
     public File(
-            String fileOverview, List<Category> category, FileType fileType,
+            String fileOverview, List<Category> categories, FileType fileType,
             String originalFileName, String savedFileName, String fileMediaType
     ) {
         this.fileOverview = fileOverview;
-        this.category = category;
+        this.categories = categories;
         this.fileType = fileType;
         this.originalFileName = originalFileName;
         this.savedFileName = savedFileName;
@@ -60,7 +66,7 @@ public class File extends BaseTimeEntity implements EntityId<Long> {
 
     public void enrichMetadata(String fileOverview, List<Category> category, List<Tag> tags) {
         this.fileOverview = fileOverview;
-        this.category = category;
+        this.categories = category;
         this.tags = tags;
     }
 
