@@ -68,7 +68,7 @@ jobs:
       - name: Restore SSL keystore
         shell: bash
         run: |
-          echo "${{ secrets.ssl-key }}" | base64 --decode > ${{ secrets.ssl-file-name }}
+          echo "${{ secrets.ssl-key }}" | base64 --decode > ${{ env.profile-dir }}/${{ secrets.ssl-file-name }}
 
       - name: Build application
         uses: ./.github/workflows/composite/build-application
