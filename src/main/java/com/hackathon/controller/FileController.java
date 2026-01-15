@@ -1,13 +1,14 @@
 package com.hackathon.controller;
 
-import com.hackathon.controller.dto.FileInfo;
+import com.hackathon.controller.dto.*;
 import com.hackathon.domain.*;
+import com.hackathon.domain.exception.*;
 import com.hackathon.service.*;
-import com.hackathon.util.*;
 import com.hackathon.util.api.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.*;
+import java.util.*;
 import lombok.*;
 import lombok.extern.slf4j.*;
 import org.springdoc.core.annotations.*;
@@ -23,23 +24,17 @@ public class FileController {
 
     private final FileService fileService;
     private final FileIO fileIO;
+    private final ContentTypeValidator contentTypeValidator;
 
     @GetMapping
-    public ApiResponse<SimplePageResponse<File>> getFiles(
-            @Valid @ParameterObject @ModelAttribute
-            SimplePageRequest pageRequest,
-            @RequestParam(required = false) String cat,
+    public ApiResponse<List<File>> getFiles(
+            @RequestParam(required = false) String category,
             @RequestParam(required = false) String type
     ) {
-        int pageNo = pageRequest.pageNum();
-        int pageSize = pageRequest.pageSize();
-
-        Category category = Category.resolveOrNull(cat);
+        Category cat = Category.resolveOrNull(category);
         FileType fileType = FileType.resolveOrNull(type);
 
-        SimplePageResponse<File> resp = fileService.getFiles(
-                category, fileType, pageNo, pageSize
-        );
+        List<File> resp = fileService.getFiles(cat, fileType);
 
         return ApiResponse.success(resp);
     }
@@ -69,6 +64,14 @@ public class FileController {
     public ApiResponse<File> saveFile(
             @RequestPart MultipartFile multipartFile
     ) {
+        String contentType = multipartFile.getContentType();
+        if (!contentTypeValidator.acceptableType(contentType)) {
+            throw new UnacceptableContentTypeException(String.format(
+                    "허용되지 않는 파일 형식입니다: %s",
+                    contentType
+            ));
+        }
+
         File file = fileService.saveFile(multipartFile);
         return ApiResponse.created(file);
     }
