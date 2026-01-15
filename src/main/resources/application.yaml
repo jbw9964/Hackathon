@@ -54,6 +54,7 @@ spring:
     max-file-size: ${common-secret.file.max-size}
     max-request-size: ${common-secret.file.max-size}
     strict-servlet-compliance: true
+    resolve-lazily: true
 
 management:
   endpoints:

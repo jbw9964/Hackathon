@@ -36,7 +36,7 @@ public class FileService {
             Category category, FileType fileType, int pageNo, int pageSize
     ) {
 
-        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Pageable pageable = PageUtil.latest(pageNo, pageSize);
         Page<File> find;
 
         if (category == null && fileType == null) {

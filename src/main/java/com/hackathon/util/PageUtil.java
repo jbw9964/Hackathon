@@ -20,4 +20,8 @@ public class PageUtil {
 
         return new SimplePageResponse<>(pageNo, pageSize, numOfTotalElements, hasNext, infos);
     }
+
+    public static Pageable latest(int pageNo, int pageSize)    {
+        return PageRequest.of(pageNo, pageSize, Sort.by("id").descending());
+    }
 }

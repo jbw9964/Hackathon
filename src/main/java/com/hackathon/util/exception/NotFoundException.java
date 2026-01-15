@@ -9,6 +9,6 @@ public class NotFoundException extends CustomException {
     }
 
     public NotFoundException(String message, Object data) {
-        super(HttpStatus.FORBIDDEN.value(), message, data);
+        super(HttpStatus.NOT_FOUND.value(), message, data);
     }
 }
