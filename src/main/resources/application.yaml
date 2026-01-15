@@ -1,3 +1,9 @@
+server:
+  ssl:
+    key-store: ${common-secret.ssl.key-store}
+    key-store-type: ${common-secret.ssl.key-store-type}
+    key-alias: ${common-secret.ssl.key-alias}
+    key-store-password: ${common-secret.ssl.key-store-password}
 
 spring:
   application.name: hackathon

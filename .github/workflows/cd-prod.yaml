@@ -32,6 +32,8 @@ jobs:
       docker-hub-pw: ${{ secrets.DOCKER_HUB_PW }}
       prod-secret: ${{ secrets.PROD_SECRET }}
       prod-db: ${{ secrets.PROD_DB }}
+      ssl-key: ${{ secrets.SSL_KEY }}
+      ssl-file-name: ${{ secrets.SSL_FILE_NAME }}
 
   up-service:
     runs-on: ubuntu-latest

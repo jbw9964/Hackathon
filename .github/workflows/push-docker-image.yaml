@@ -29,6 +29,14 @@ on:
         required: true
         description: 'PROD_DB'
 
+      ssl-key:
+        required: true
+        description: 'SSL_KEY'
+
+      ssl-file-name:
+        required: true
+        description: 'SSL_FILE_NAME'
+
 
 env:
   profile-dir: './src/main/resources'
@@ -56,6 +64,11 @@ jobs:
           cat <<'EOF' > "${{ env.profile-dir }}/application-prod-db.yaml"
           ${{ secrets.prod-db }}
           EOF
+
+      - name: Restore SSL keystore
+        shell: bash
+        run: |
+          echo "${{ secrets.ssl-key }}" | base64 --decode > ${{ secrets.ssl-file-name }}
 
       - name: Build application
         uses: ./.github/workflows/composite/build-application

@@ -10,6 +10,8 @@ build/
 /src/main/resources/application-common-secret.yaml
 /src/main/resources/application-prod-secret.yaml
 /src/main/resources/application-prod-db.yaml
+/src/main/resources/*.p12
+/src/main/resources/*.p12.*
 
 ### STS ###
 .apt_generated
